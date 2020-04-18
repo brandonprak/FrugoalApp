@@ -41,11 +41,11 @@ class _MyHomePageState extends State<MyHomePage> {
   List<CircularStackEntry> data = <CircularStackEntry>[
     new CircularStackEntry(
       <CircularSegmentEntry>[
-        new CircularSegmentEntry(500, Colors.red, rankKey: 'Q1'),
-        new CircularSegmentEntry(1000, Colors.green, rankKey: 'Q2'),
-        new CircularSegmentEntry(250, Colors.blue, rankKey: 'Q3'),
-        new CircularSegmentEntry(1000, Colors.yellow, rankKey: 'Q4'),
-        new CircularSegmentEntry(500, Colors.purple, rankKey: 'Q5'),
+        new CircularSegmentEntry(3300, Colors.red, rankKey: 'Q1'),
+        new CircularSegmentEntry(195, Colors.green, rankKey: 'Q2'),
+        new CircularSegmentEntry(60, Colors.blue, rankKey: 'Q3'),
+        new CircularSegmentEntry(45, Colors.yellow, rankKey: 'Q4'),
+        new CircularSegmentEntry(30, Colors.purple, rankKey: 'Q5'),
       ],
       rankKey: 'Quarterly Profits',
     ),
@@ -55,11 +55,11 @@ class _MyHomePageState extends State<MyHomePage> {
     List<CircularStackEntry> nextData = <CircularStackEntry>[
       new CircularStackEntry(
         <CircularSegmentEntry>[
-          new CircularSegmentEntry(500, Colors.red, rankKey: 'Q1'),
-          new CircularSegmentEntry(1000, Colors.green, rankKey: 'Q2'),
-          new CircularSegmentEntry(250, Colors.blue, rankKey: 'Q3'),
-          new CircularSegmentEntry(1000, Colors.yellow, rankKey: 'Q4'),
-          new CircularSegmentEntry(500, Colors.purple, rankKey: 'Q5'),
+          new CircularSegmentEntry(3300, Colors.red, rankKey: 'Q1'),
+          new CircularSegmentEntry(195, Colors.green, rankKey: 'Q2'),
+          new CircularSegmentEntry(60, Colors.blue, rankKey: 'Q3'),
+          new CircularSegmentEntry(45, Colors.yellow, rankKey: 'Q4'),
+          new CircularSegmentEntry(30, Colors.purple, rankKey: 'Q5'),
         ],
         rankKey: 'Quarterly Profits',
       ),
@@ -177,11 +177,220 @@ class ListPage extends StatelessWidget {
                   style: TextStyle(fontSize: 18.0, color: Colors.white),
                 ),
                 onTap: () {
-                  print('Education');
+                  if (category[index] == 'Education') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EducationPage()),
+                    );
+                  } else if (category[index] == 'Food') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FoodPage()),
+                    );
+                  } else if (category[index] == 'Transportation') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TransportationPage()),
+                    );
+                  } else if (category[index] == 'Entertainment') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EntertainmentPage()),
+                    );
+                  } else if (category[index] == 'Other') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OtherPage()),
+                    );
+                  }
                 }),
           );
         },
       ),
     );
+  }
+}
+
+class EducationPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.blueGrey[900],
+        appBar: AppBar(
+          elevation: 0.0,
+          title: Text('Education'),
+          backgroundColor: Colors.blueGrey[900],
+        ),
+        body: ListView(
+          children: <Widget>[
+            ListTile(
+              title: Text('Tuition Fees', style: TextStyle(color: Colors.white)),
+              subtitle: Text('\$3000', style: TextStyle(color: Colors.white)),
+            ),
+            ListTile(
+              title: Text('Calculus Textbook', style: TextStyle(color: Colors.white)),
+              subtitle: Text('\$200', style: TextStyle(color: Colors.white)),
+            ),
+            ListTile(
+              title: Text('History Textbook', style: TextStyle(color: Colors.white)),
+              subtitle: Text('\$100', style: TextStyle(color: Colors.white)),
+            ),
+          ]
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          elevation: 5.0,
+          backgroundColor: Colors.blueGrey[700],
+          icon: Icon(Icons.control_point),
+          label: Text('Add'),
+          onPressed: () {
+            print('Test');
+          },
+        ));
+  }
+}
+
+class FoodPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.blueGrey[900],
+        appBar: AppBar(
+          elevation: 0.0,
+          title: Text('Food'),
+          backgroundColor: Colors.blueGrey[900],
+        ),
+        body: ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text('Groceries', style: TextStyle(color: Colors.white)),
+                subtitle: Text('\$150', style: TextStyle(color: Colors.white)),
+              ),
+              ListTile(
+                title: Text('Cheesecake Factory', style: TextStyle(color: Colors.white)),
+                subtitle: Text('\$40', style: TextStyle(color: Colors.white)),
+              ),
+              ListTile(
+                title: Text('Afters Ice Cream', style: TextStyle(color: Colors.white)),
+                subtitle: Text('\$5', style: TextStyle(color: Colors.white)),
+              ),
+            ]
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          elevation: 5.0,
+          backgroundColor: Colors.blueGrey[700],
+          icon: Icon(Icons.control_point),
+          label: Text('Add'),
+          onPressed: () {
+            print('Test');
+          },
+        ));
+  }
+}
+
+class TransportationPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.blueGrey[900],
+        appBar: AppBar(
+          elevation: 0.0,
+          title: Text('Transportation'),
+          backgroundColor: Colors.blueGrey[900],
+        ),
+        body: ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text('Gas', style: TextStyle(color: Colors.white)),
+                subtitle: Text('\$40', style: TextStyle(color: Colors.white)),
+              ),
+              ListTile(
+                title: Text('Uber', style: TextStyle(color: Colors.white)),
+                subtitle: Text('\$20', style: TextStyle(color: Colors.white)),
+              ),
+            ]
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          elevation: 5.0,
+          backgroundColor: Colors.blueGrey[700],
+          icon: Icon(Icons.control_point),
+          label: Text('Add'),
+          onPressed: () {
+            print('Test');
+          },
+        ));
+  }
+}
+
+class EntertainmentPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.blueGrey[900],
+        appBar: AppBar(
+          elevation: 0.0,
+          title: Text('Entertainment'),
+          backgroundColor: Colors.blueGrey[900],
+        ),
+        body: ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text('Netflix', style: TextStyle(color: Colors.white)),
+                subtitle: Text('\$13', style: TextStyle(color: Colors.white)),
+              ),
+              ListTile(
+                title: Text('Spotify', style: TextStyle(color: Colors.white)),
+                subtitle: Text('\$12', style: TextStyle(color: Colors.white)),
+              ),
+              ListTile(
+                title: Text('Movie', style: TextStyle(color: Colors.white)),
+                subtitle: Text('\$12', style: TextStyle(color: Colors.white)),
+              ),
+              ListTile(
+                title: Text('Art Museum', style: TextStyle(color: Colors.white)),
+                subtitle: Text('\$8', style: TextStyle(color: Colors.white)),
+              ),
+            ]
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          elevation: 5.0,
+          backgroundColor: Colors.blueGrey[700],
+          icon: Icon(Icons.control_point),
+          label: Text('Add'),
+          onPressed: () {
+            print('Test');
+          },
+        ));
+  }
+}
+
+class OtherPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.blueGrey[900],
+        appBar: AppBar(
+          elevation: 0.0,
+          title: Text('Other'),
+          backgroundColor: Colors.blueGrey[900],
+        ),
+        body: ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text('Clothes', style: TextStyle(color: Colors.white)),
+                subtitle: Text('\$30', style: TextStyle(color: Colors.white)),
+              ),
+            ]
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          elevation: 5.0,
+          backgroundColor: Colors.blueGrey[700],
+          icon: Icon(Icons.control_point),
+          label: Text('Add'),
+          onPressed: () {
+            print('Test');
+          },
+        ));
   }
 }
