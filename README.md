@@ -1,6 +1,6 @@
-# frugoal_app
+# Frugoal
 
-A new Flutter application.
+A Flutter application that allows you to manage your budget with categories and a visual pie chart.
 
 ## Getting Started
 
