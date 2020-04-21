@@ -213,7 +213,12 @@ class ListPage extends StatelessWidget {
   }
 }
 
-class EducationPage extends StatelessWidget {
+class EducationPage extends StatefulWidget {
+  @override
+  _EducationPageState createState() => _EducationPageState();
+}
+
+class _EducationPageState extends State<EducationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -223,22 +228,22 @@ class EducationPage extends StatelessWidget {
           title: Text('Education'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView(
-          children: <Widget>[
-            ListTile(
-              title: Text('Tuition Fees', style: TextStyle(color: Colors.white)),
-              subtitle: Text('\$3000', style: TextStyle(color: Colors.white)),
-            ),
-            ListTile(
-              title: Text('Calculus Textbook', style: TextStyle(color: Colors.white)),
-              subtitle: Text('\$200', style: TextStyle(color: Colors.white)),
-            ),
-            ListTile(
-              title: Text('History Textbook', style: TextStyle(color: Colors.white)),
-              subtitle: Text('\$100', style: TextStyle(color: Colors.white)),
-            ),
-          ]
-        ),
+        body: ListView(children: <Widget>[
+          ListTile(
+            title: Text('Tuition Fees', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$3000', style: TextStyle(color: Colors.white)),
+          ),
+          ListTile(
+            title: Text('Calculus Textbook',
+                style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$200', style: TextStyle(color: Colors.white)),
+          ),
+          ListTile(
+            title:
+                Text('History Textbook', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$100', style: TextStyle(color: Colors.white)),
+          ),
+        ]),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
           backgroundColor: Colors.blueGrey[700],
@@ -251,7 +256,12 @@ class EducationPage extends StatelessWidget {
   }
 }
 
-class FoodPage extends StatelessWidget {
+class FoodPage extends StatefulWidget {
+  @override
+  _FoodPageState createState() => _FoodPageState();
+}
+
+class _FoodPageState extends State<FoodPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -261,22 +271,22 @@ class FoodPage extends StatelessWidget {
           title: Text('Food'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView(
-            children: <Widget>[
-              ListTile(
-                title: Text('Groceries', style: TextStyle(color: Colors.white)),
-                subtitle: Text('\$150', style: TextStyle(color: Colors.white)),
-              ),
-              ListTile(
-                title: Text('Cheesecake Factory', style: TextStyle(color: Colors.white)),
-                subtitle: Text('\$40', style: TextStyle(color: Colors.white)),
-              ),
-              ListTile(
-                title: Text('Afters Ice Cream', style: TextStyle(color: Colors.white)),
-                subtitle: Text('\$5', style: TextStyle(color: Colors.white)),
-              ),
-            ]
-        ),
+        body: ListView(children: <Widget>[
+          ListTile(
+            title: Text('Groceries', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$150', style: TextStyle(color: Colors.white)),
+          ),
+          ListTile(
+            title: Text('Cheesecake Factory',
+                style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$40', style: TextStyle(color: Colors.white)),
+          ),
+          ListTile(
+            title:
+                Text('Afters Ice Cream', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$5', style: TextStyle(color: Colors.white)),
+          ),
+        ]),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
           backgroundColor: Colors.blueGrey[700],
@@ -289,7 +299,12 @@ class FoodPage extends StatelessWidget {
   }
 }
 
-class TransportationPage extends StatelessWidget {
+class TransportationPage extends StatefulWidget {
+  @override
+  _TransportationPageState createState() => _TransportationPageState();
+}
+
+class _TransportationPageState extends State<TransportationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -299,18 +314,16 @@ class TransportationPage extends StatelessWidget {
           title: Text('Transportation'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView(
-            children: <Widget>[
-              ListTile(
-                title: Text('Gas', style: TextStyle(color: Colors.white)),
-                subtitle: Text('\$40', style: TextStyle(color: Colors.white)),
-              ),
-              ListTile(
-                title: Text('Uber', style: TextStyle(color: Colors.white)),
-                subtitle: Text('\$20', style: TextStyle(color: Colors.white)),
-              ),
-            ]
-        ),
+        body: ListView(children: <Widget>[
+          ListTile(
+            title: Text('Gas', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$40', style: TextStyle(color: Colors.white)),
+          ),
+          ListTile(
+            title: Text('Uber', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$20', style: TextStyle(color: Colors.white)),
+          ),
+        ]),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
           backgroundColor: Colors.blueGrey[700],
@@ -323,7 +336,12 @@ class TransportationPage extends StatelessWidget {
   }
 }
 
-class EntertainmentPage extends StatelessWidget {
+class EntertainmentPage extends StatefulWidget {
+  @override
+  _EntertainmentPageState createState() => _EntertainmentPageState();
+}
+
+class _EntertainmentPageState extends State<EntertainmentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -333,26 +351,24 @@ class EntertainmentPage extends StatelessWidget {
           title: Text('Entertainment'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView(
-            children: <Widget>[
-              ListTile(
-                title: Text('Netflix', style: TextStyle(color: Colors.white)),
-                subtitle: Text('\$13', style: TextStyle(color: Colors.white)),
-              ),
-              ListTile(
-                title: Text('Spotify', style: TextStyle(color: Colors.white)),
-                subtitle: Text('\$12', style: TextStyle(color: Colors.white)),
-              ),
-              ListTile(
-                title: Text('Movie', style: TextStyle(color: Colors.white)),
-                subtitle: Text('\$12', style: TextStyle(color: Colors.white)),
-              ),
-              ListTile(
-                title: Text('Art Museum', style: TextStyle(color: Colors.white)),
-                subtitle: Text('\$8', style: TextStyle(color: Colors.white)),
-              ),
-            ]
-        ),
+        body: ListView(children: <Widget>[
+          ListTile(
+            title: Text('Netflix', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$13', style: TextStyle(color: Colors.white)),
+          ),
+          ListTile(
+            title: Text('Spotify', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$12', style: TextStyle(color: Colors.white)),
+          ),
+          ListTile(
+            title: Text('Movie', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$12', style: TextStyle(color: Colors.white)),
+          ),
+          ListTile(
+            title: Text('Art Museum', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$8', style: TextStyle(color: Colors.white)),
+          ),
+        ]),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
           backgroundColor: Colors.blueGrey[700],
@@ -365,7 +381,12 @@ class EntertainmentPage extends StatelessWidget {
   }
 }
 
-class OtherPage extends StatelessWidget {
+class OtherPage extends StatefulWidget {
+  @override
+  _OtherPageState createState() => _OtherPageState();
+}
+
+class _OtherPageState extends State<OtherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -375,22 +396,53 @@ class OtherPage extends StatelessWidget {
           title: Text('Other'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView(
-            children: <Widget>[
-              ListTile(
-                title: Text('Clothes', style: TextStyle(color: Colors.white)),
-                subtitle: Text('\$30', style: TextStyle(color: Colors.white)),
-              ),
-            ]
-        ),
+        body: ListView(children: <Widget>[
+          ListTile(
+            title: Text('Clothes', style: TextStyle(color: Colors.white)),
+            subtitle: Text('\$30', style: TextStyle(color: Colors.white)),
+          ),
+        ]),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
           backgroundColor: Colors.blueGrey[700],
           icon: Icon(Icons.control_point),
           label: Text('Add'),
-          onPressed: () {
-            print('Test');
-          },
+          onPressed: () => AddItem(),
         ));
+  }
+}
+
+class AddItem extends StatefulWidget {
+  @override
+  _AddItemState createState() => _AddItemState();
+}
+
+class _AddItemState extends State<AddItem> {
+  @override
+  Widget build(BuildContext context) {
+    return new AlertDialog(
+      title: new Text('Add Item'),
+      contentPadding: const EdgeInsets.all(16.0),
+      content: new Row(
+        children: <Widget>[
+          new Expanded(
+              child: new TextField(
+                  autofocus: true,
+                  decoration: new InputDecoration(labelText: 'Item Name')))
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: new Text('Cancel')),
+        new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: new Text('Add'))
+      ],
+    );
   }
 }
