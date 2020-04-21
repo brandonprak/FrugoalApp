@@ -407,42 +407,9 @@ class _OtherPageState extends State<OtherPage> {
           backgroundColor: Colors.blueGrey[700],
           icon: Icon(Icons.control_point),
           label: Text('Add'),
-          onPressed: () => AddItem(),
+          onPressed: () {
+            print('Test');
+          },
         ));
-  }
-}
-
-class AddItem extends StatefulWidget {
-  @override
-  _AddItemState createState() => _AddItemState();
-}
-
-class _AddItemState extends State<AddItem> {
-  @override
-  Widget build(BuildContext context) {
-    return new AlertDialog(
-      title: new Text('Add Item'),
-      contentPadding: const EdgeInsets.all(16.0),
-      content: new Row(
-        children: <Widget>[
-          new Expanded(
-              child: new TextField(
-                  autofocus: true,
-                  decoration: new InputDecoration(labelText: 'Item Name')))
-        ],
-      ),
-      actions: <Widget>[
-        new FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: new Text('Cancel')),
-        new FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: new Text('Add'))
-      ],
-    );
   }
 }
