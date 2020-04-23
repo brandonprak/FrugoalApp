@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
             color: Colors.blueGrey[700],
             child: ListTile(
               leading: Icon(Icons.person, size: 52, color: Colors.white),
-              title: Text('Welcome User',
+              title: Text('Welcome to Frugoal',
                   style: TextStyle(fontSize: 18, color: Colors.white)),
               subtitle: Text('Here is your budget at a glance',
                   style: TextStyle(fontSize: 14, color: Colors.white)),
@@ -219,6 +219,12 @@ class EducationPage extends StatefulWidget {
 }
 
 class _EducationPageState extends State<EducationPage> {
+  final List<String> educationItems = <String>[
+    'Tuition',
+    'Textbooks',
+    'Lab Equipment'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -228,31 +234,51 @@ class _EducationPageState extends State<EducationPage> {
           title: Text('Education'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView(children: <Widget>[
-          ListTile(
-            title: Text('Tuition Fees', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$3000', style: TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            title: Text('Calculus Textbook',
-                style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$200', style: TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            title:
-                Text('History Textbook', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$100', style: TextStyle(color: Colors.white)),
-          ),
-        ]),
+        body: ListView.builder(
+          itemCount: educationItems.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              elevation: 3.0,
+              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+              color: Colors.blueGrey[700],
+              child: ListTile(
+                title: Text(
+                  '${educationItems[index]}',
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                dense: true,
+                onLongPress: () {
+                  setState(() {
+                    educationItems.removeAt(index);
+                  });
+                },
+              ),
+            );
+          },
+        ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
           backgroundColor: Colors.blueGrey[700],
           icon: Icon(Icons.control_point),
           label: Text('Add'),
-          onPressed: () {
-            print('Test');
-          },
+          onPressed: _showDialog,
         ));
+  }
+
+  _showDialog() async {
+    await showDialog<String>(
+        context: context,
+        child: new AlertDialog(
+            contentPadding: const EdgeInsets.all(16.0),
+            content: new Row(
+              children: <Widget>[
+                new Expanded(
+                    child: new TextField(
+                  autofocus: true,
+                  decoration: new InputDecoration(labelText: 'New Expense'),
+                ))
+              ],
+            )));
   }
 }
 
@@ -262,6 +288,13 @@ class FoodPage extends StatefulWidget {
 }
 
 class _FoodPageState extends State<FoodPage> {
+  final List<String> foodItems = [
+    'Groceries',
+    'Ramen Bar',
+    'Boba',
+    'Ice Cream'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -271,22 +304,23 @@ class _FoodPageState extends State<FoodPage> {
           title: Text('Food'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView(children: <Widget>[
-          ListTile(
-            title: Text('Groceries', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$150', style: TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            title: Text('Cheesecake Factory',
-                style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$40', style: TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            title:
-                Text('Afters Ice Cream', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$5', style: TextStyle(color: Colors.white)),
-          ),
-        ]),
+        body: ListView.builder(
+          itemCount: foodItems.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              elevation: 3.0,
+              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+              color: Colors.blueGrey[700],
+              child: ListTile(
+                title: Text(
+                  '${foodItems[index]}',
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                dense: true,
+              ),
+            );
+          },
+        ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
           backgroundColor: Colors.blueGrey[700],
@@ -305,6 +339,11 @@ class TransportationPage extends StatefulWidget {
 }
 
 class _TransportationPageState extends State<TransportationPage> {
+  final List<String> transportationItems = [
+    'Gas',
+    'Uber',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -314,16 +353,23 @@ class _TransportationPageState extends State<TransportationPage> {
           title: Text('Transportation'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView(children: <Widget>[
-          ListTile(
-            title: Text('Gas', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$40', style: TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            title: Text('Uber', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$20', style: TextStyle(color: Colors.white)),
-          ),
-        ]),
+        body: ListView.builder(
+          itemCount: transportationItems.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              elevation: 3.0,
+              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+              color: Colors.blueGrey[700],
+              child: ListTile(
+                title: Text(
+                  '${transportationItems[index]}',
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                dense: true,
+              ),
+            );
+          },
+        ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
           backgroundColor: Colors.blueGrey[700],
@@ -342,6 +388,13 @@ class EntertainmentPage extends StatefulWidget {
 }
 
 class _EntertainmentPageState extends State<EntertainmentPage> {
+  final List<String> entertainmentItems = [
+    'Netflix',
+    'Spotify',
+    'Movie Theater',
+    'Mini Golf'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -351,24 +404,23 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
           title: Text('Entertainment'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView(children: <Widget>[
-          ListTile(
-            title: Text('Netflix', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$13', style: TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            title: Text('Spotify', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$12', style: TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            title: Text('Movie', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$12', style: TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            title: Text('Art Museum', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$8', style: TextStyle(color: Colors.white)),
-          ),
-        ]),
+        body: ListView.builder(
+          itemCount: entertainmentItems.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              elevation: 3.0,
+              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+              color: Colors.blueGrey[700],
+              child: ListTile(
+                title: Text(
+                  '${entertainmentItems[index]}',
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                dense: true,
+              ),
+            );
+          },
+        ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
           backgroundColor: Colors.blueGrey[700],
@@ -387,6 +439,8 @@ class OtherPage extends StatefulWidget {
 }
 
 class _OtherPageState extends State<OtherPage> {
+  final List<String> otherItems = ['Clothes'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -396,12 +450,23 @@ class _OtherPageState extends State<OtherPage> {
           title: Text('Other'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView(children: <Widget>[
-          ListTile(
-            title: Text('Clothes', style: TextStyle(color: Colors.white)),
-            subtitle: Text('\$30', style: TextStyle(color: Colors.white)),
-          ),
-        ]),
+        body: ListView.builder(
+          itemCount: otherItems.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              elevation: 3.0,
+              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+              color: Colors.blueGrey[700],
+              child: ListTile(
+                title: Text(
+                  '${otherItems[index]}',
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                dense: true,
+              ),
+            );
+          },
+        ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
           backgroundColor: Colors.blueGrey[700],
