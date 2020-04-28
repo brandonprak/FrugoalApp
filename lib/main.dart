@@ -218,17 +218,20 @@ class EducationPage extends StatefulWidget {
   _EducationPageState createState() => _EducationPageState();
 }
 
-class _EducationPageState extends State<EducationPage> {
-  List<String> educationItems = [
-    'Tuition',
-    'Textbooks',
-    'Lab Equipment'
-  ];
-
+class _EducationPageState extends State<EducationPage>
+    with AutomaticKeepAliveClientMixin<EducationPage> {
+  List<String> educationItems = ['Tuition', 'Textbooks', 'Lab Equipment'];
   List<String> educationPrices = ['2000', '300', '50'];
+
+  TextEditingController itemController = new TextEditingController();
+  TextEditingController priceController = new TextEditingController();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         backgroundColor: Colors.blueGrey[900],
         appBar: AppBar(
@@ -277,14 +280,16 @@ class _EducationPageState extends State<EducationPage> {
         child: new AlertDialog(
           contentPadding: const EdgeInsets.all(16.0),
           content: new Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               TextField(
+                controller: itemController,
                 autofocus: true,
-                decoration: new InputDecoration(labelText: 'Expense'),
+                decoration: new InputDecoration(labelText: 'Item'),
               ),
               TextField(
-                autofocus: true,
-                decoration: new InputDecoration(labelText: 'Price'),
+                controller: priceController,
+                decoration: new InputDecoration(labelText: 'Price (\$)'),
               ),
             ],
           ),
@@ -297,7 +302,13 @@ class _EducationPageState extends State<EducationPage> {
             new FlatButton(
                 child: const Text('Enter'),
                 onPressed: () {
-                  Navigator.pop(context);
+                  setState(() {
+                    educationItems.add(itemController.text);
+                    educationPrices.add(priceController.text);
+                    Navigator.pop(context);
+                    itemController.clear();
+                    priceController.clear();
+                  });
                 }),
           ],
         ));
@@ -339,6 +350,11 @@ class _FoodPageState extends State<FoodPage> {
                   style: TextStyle(color: Colors.white),
                 ),
                 dense: true,
+                onLongPress: () {
+                  setState(() {
+                    foodItems.removeAt(index);
+                  });
+                },
               ),
             );
           },
@@ -394,6 +410,11 @@ class _TransportationPageState extends State<TransportationPage> {
                   style: TextStyle(color: Colors.white),
                 ),
                 dense: true,
+                onLongPress: () {
+                  setState(() {
+                    transportationItems.removeAt(index);
+                  });
+                },
               ),
             );
           },
@@ -451,6 +472,11 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
                   style: TextStyle(color: Colors.white),
                 ),
                 dense: true,
+                onLongPress: () {
+                  setState(() {
+                    entertainmentItems.removeAt(index);
+                  });
+                },
               ),
             );
           },
@@ -503,6 +529,11 @@ class _OtherPageState extends State<OtherPage> {
                   style: TextStyle(color: Colors.white),
                 ),
                 dense: true,
+                onLongPress: () {
+                  setState(() {
+                    otherItems.removeAt(index);
+                  });
+                },
               ),
             );
           },
