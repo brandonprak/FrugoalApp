@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Frugoal',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Frugoal Home Page'),
     );
   }
 }
@@ -219,11 +219,13 @@ class EducationPage extends StatefulWidget {
 }
 
 class _EducationPageState extends State<EducationPage> {
-  final List<String> educationItems = <String>[
+  List<String> educationItems = [
     'Tuition',
     'Textbooks',
     'Lab Equipment'
   ];
+
+  List<String> educationPrices = ['2000', '300', '50'];
 
   @override
   Widget build(BuildContext context) {
@@ -245,6 +247,10 @@ class _EducationPageState extends State<EducationPage> {
                 title: Text(
                   '${educationItems[index]}',
                   style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                subtitle: Text(
+                  '\$${educationPrices[index]}',
+                  style: TextStyle(color: Colors.white),
                 ),
                 dense: true,
                 onLongPress: () {
@@ -269,16 +275,32 @@ class _EducationPageState extends State<EducationPage> {
     await showDialog<String>(
         context: context,
         child: new AlertDialog(
-            contentPadding: const EdgeInsets.all(16.0),
-            content: new Row(
-              children: <Widget>[
-                new Expanded(
-                    child: new TextField(
-                  autofocus: true,
-                  decoration: new InputDecoration(labelText: 'New Expense'),
-                ))
-              ],
-            )));
+          contentPadding: const EdgeInsets.all(16.0),
+          content: new Column(
+            children: <Widget>[
+              TextField(
+                autofocus: true,
+                decoration: new InputDecoration(labelText: 'Expense'),
+              ),
+              TextField(
+                autofocus: true,
+                decoration: new InputDecoration(labelText: 'Price'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            new FlatButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            new FlatButton(
+                child: const Text('Enter'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+          ],
+        ));
   }
 }
 
@@ -288,12 +310,8 @@ class FoodPage extends StatefulWidget {
 }
 
 class _FoodPageState extends State<FoodPage> {
-  final List<String> foodItems = [
-    'Groceries',
-    'Ramen Bar',
-    'Boba',
-    'Ice Cream'
-  ];
+  List<String> foodItems = ['Groceries', 'Ramen Bar', 'Boba', 'Ice Cream'];
+  List<String> foodPrices = ['140', '25', '3', '2'];
 
   @override
   Widget build(BuildContext context) {
@@ -315,6 +333,10 @@ class _FoodPageState extends State<FoodPage> {
                 title: Text(
                   '${foodItems[index]}',
                   style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                subtitle: Text(
+                  '\$${foodPrices[index]}',
+                  style: TextStyle(color: Colors.white),
                 ),
                 dense: true,
               ),
@@ -339,10 +361,12 @@ class TransportationPage extends StatefulWidget {
 }
 
 class _TransportationPageState extends State<TransportationPage> {
-  final List<String> transportationItems = [
+  List<String> transportationItems = [
     'Gas',
     'Uber',
   ];
+
+  List<String> transportationPrices = ['40', '15'];
 
   @override
   Widget build(BuildContext context) {
@@ -364,6 +388,10 @@ class _TransportationPageState extends State<TransportationPage> {
                 title: Text(
                   '${transportationItems[index]}',
                   style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                subtitle: Text(
+                  '\$${transportationPrices[index]}',
+                  style: TextStyle(color: Colors.white),
                 ),
                 dense: true,
               ),
@@ -388,12 +416,14 @@ class EntertainmentPage extends StatefulWidget {
 }
 
 class _EntertainmentPageState extends State<EntertainmentPage> {
-  final List<String> entertainmentItems = [
+  List<String> entertainmentItems = [
     'Netflix',
     'Spotify',
     'Movie Theater',
     'Mini Golf'
   ];
+
+  List<String> entertainmentPrices = ['12', '10', '20', '5'];
 
   @override
   Widget build(BuildContext context) {
@@ -415,6 +445,10 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
                 title: Text(
                   '${entertainmentItems[index]}',
                   style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                subtitle: Text(
+                  '\$${entertainmentPrices[index]}',
+                  style: TextStyle(color: Colors.white),
                 ),
                 dense: true,
               ),
@@ -439,7 +473,9 @@ class OtherPage extends StatefulWidget {
 }
 
 class _OtherPageState extends State<OtherPage> {
-  final List<String> otherItems = ['Clothes'];
+  List<String> otherItems = ['Clothes'];
+
+  List<String> otherPrices = ['30'];
 
   @override
   Widget build(BuildContext context) {
@@ -461,6 +497,10 @@ class _OtherPageState extends State<OtherPage> {
                 title: Text(
                   '${otherItems[index]}',
                   style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                subtitle: Text(
+                  '\$${otherPrices[index]}',
+                  style: TextStyle(color: Colors.white),
                 ),
                 dense: true,
               ),
