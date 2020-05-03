@@ -90,28 +90,35 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {},
             ),
           ]),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Card(
-            elevation: 5.0,
-            margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-            color: Colors.blueGrey[700],
-            child: ListTile(
-              leading: Icon(Icons.person, size: 52, color: Colors.white),
-              title: Text('Welcome to Frugoal',
-                  style: TextStyle(fontSize: 18, color: Colors.white)),
-              subtitle: Text('Here is your budget at a glance',
-                  style: TextStyle(fontSize: 14, color: Colors.white)),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/background.png'),
+              fit: BoxFit.cover),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Card(
+              elevation: 5.0,
+              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+              color: Colors.blueGrey[700],
+              child: ListTile(
+                leading: Icon(Icons.person, size: 52, color: Colors.white),
+                title: Text('Welcome to Frugoal',
+                    style: TextStyle(fontSize: 18, color: Colors.white)),
+                subtitle: Text('Here is your budget at a glance',
+                    style: TextStyle(fontSize: 14, color: Colors.white)),
+              ),
             ),
-          ),
-          AnimatedCircularChart(
-            key: _chartKey,
-            size: const Size(350, 350),
-            initialChartData: data,
-            chartType: CircularChartType.Pie,
-          ),
-        ],
+            AnimatedCircularChart(
+              key: _chartKey,
+              size: const Size(350, 350),
+              initialChartData: data,
+              chartType: CircularChartType.Pie,
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         elevation: 5.0,
@@ -121,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ListPage()),
+            MaterialPageRoute(builder: (context) => CategoryPage()),
           );
         },
       ),
@@ -129,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class ListPage extends StatelessWidget {
+class CategoryPage extends StatelessWidget {
   final category = [
     'Education',
     'Food',
@@ -161,53 +168,61 @@ class ListPage extends StatelessWidget {
         title: Text('Categories'),
         backgroundColor: Colors.blueGrey[900],
       ),
-      body: ListView.builder(
-        itemCount: this.category.length,
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 5.0,
-            margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-            color: Colors.blueGrey[700],
-            child: ListTile(
-                leading: Icon(icon[index], color: categoryColor[index]),
-                trailing: Icon(Icons.keyboard_arrow_right,
-                    size: 20.0, color: Colors.white),
-                title: Text(
-                  category[index],
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
-                ),
-                onTap: () {
-                  if (category[index] == 'Education') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EducationPage()),
-                    );
-                  } else if (category[index] == 'Food') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FoodPage()),
-                    );
-                  } else if (category[index] == 'Transportation') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => TransportationPage()),
-                    );
-                  } else if (category[index] == 'Entertainment') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EntertainmentPage()),
-                    );
-                  } else if (category[index] == 'Other') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => OtherPage()),
-                    );
-                  }
-                }),
-          );
-        },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/background.png'),
+              fit: BoxFit.cover),
+        ),
+        child: ListView.builder(
+          itemCount: this.category.length,
+          itemBuilder: (context, index) {
+            return Card(
+              elevation: 5.0,
+              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+              color: Colors.blueGrey[700],
+              child: ListTile(
+                  leading: Icon(icon[index], color: categoryColor[index]),
+                  trailing: Icon(Icons.keyboard_arrow_right,
+                      size: 20.0, color: Colors.white),
+                  title: Text(
+                    category[index],
+                    style: TextStyle(fontSize: 18.0, color: Colors.white),
+                  ),
+                  onTap: () {
+                    if (category[index] == 'Education') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EducationPage()),
+                      );
+                    } else if (category[index] == 'Food') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FoodPage()),
+                      );
+                    } else if (category[index] == 'Transportation') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TransportationPage()),
+                      );
+                    } else if (category[index] == 'Entertainment') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EntertainmentPage()),
+                      );
+                    } else if (category[index] == 'Other') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => OtherPage()),
+                      );
+                    }
+                  }),
+            );
+          },
+        ),
       ),
     );
   }
@@ -219,7 +234,7 @@ class EducationPage extends StatefulWidget {
 }
 
 class _EducationPageState extends State<EducationPage>
-    with AutomaticKeepAliveClientMixin<EducationPage> {
+    with AutomaticKeepAliveClientMixin {
   List<String> educationItems = ['Tuition', 'Textbooks', 'Lab Equipment'];
   List<String> educationPrices = ['2000', '300', '50'];
 
@@ -228,6 +243,11 @@ class _EducationPageState extends State<EducationPage>
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -239,31 +259,40 @@ class _EducationPageState extends State<EducationPage>
           title: Text('Education'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView.builder(
-          itemCount: educationItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              elevation: 3.0,
-              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
-              color: Colors.blueGrey[700],
-              child: ListTile(
-                title: Text(
-                  '${educationItems[index]}',
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/background.png'),
+                fit: BoxFit.cover),
+          ),
+          child: ListView.builder(
+            itemCount: educationItems.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                elevation: 3.0,
+                margin:
+                    new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+                color: Colors.blueGrey[700],
+                child: ListTile(
+                  title: Text(
+                    '${educationItems[index]}',
+                    style: TextStyle(fontSize: 15.0, color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    '\$${educationPrices[index]}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  dense: true,
+                  onLongPress: () {
+                    setState(() {
+                      educationItems.removeAt(index);
+                      educationPrices.removeAt(index);
+                    });
+                  },
                 ),
-                subtitle: Text(
-                  '\$${educationPrices[index]}',
-                  style: TextStyle(color: Colors.white),
-                ),
-                dense: true,
-                onLongPress: () {
-                  setState(() {
-                    educationItems.removeAt(index);
-                  });
-                },
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
@@ -333,31 +362,40 @@ class _FoodPageState extends State<FoodPage> {
           title: Text('Food'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView.builder(
-          itemCount: foodItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              elevation: 3.0,
-              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
-              color: Colors.blueGrey[700],
-              child: ListTile(
-                title: Text(
-                  '${foodItems[index]}',
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/background.png'),
+                fit: BoxFit.cover),
+          ),
+          child: ListView.builder(
+            itemCount: foodItems.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                elevation: 3.0,
+                margin:
+                    new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+                color: Colors.blueGrey[700],
+                child: ListTile(
+                  title: Text(
+                    '${foodItems[index]}',
+                    style: TextStyle(fontSize: 15.0, color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    '\$${foodPrices[index]}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  dense: true,
+                  onLongPress: () {
+                    setState(() {
+                      foodItems.removeAt(index);
+                      foodPrices.removeAt(index);
+                    });
+                  },
                 ),
-                subtitle: Text(
-                  '\$${foodPrices[index]}',
-                  style: TextStyle(color: Colors.white),
-                ),
-                dense: true,
-                onLongPress: () {
-                  setState(() {
-                    foodItems.removeAt(index);
-                  });
-                },
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
@@ -393,31 +431,40 @@ class _TransportationPageState extends State<TransportationPage> {
           title: Text('Transportation'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView.builder(
-          itemCount: transportationItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              elevation: 3.0,
-              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
-              color: Colors.blueGrey[700],
-              child: ListTile(
-                title: Text(
-                  '${transportationItems[index]}',
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/background.png'),
+                fit: BoxFit.cover),
+          ),
+          child: ListView.builder(
+            itemCount: transportationItems.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                elevation: 3.0,
+                margin:
+                    new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+                color: Colors.blueGrey[700],
+                child: ListTile(
+                  title: Text(
+                    '${transportationItems[index]}',
+                    style: TextStyle(fontSize: 15.0, color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    '\$${transportationPrices[index]}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  dense: true,
+                  onLongPress: () {
+                    setState(() {
+                      transportationItems.removeAt(index);
+                      transportationPrices.removeAt(index);
+                    });
+                  },
                 ),
-                subtitle: Text(
-                  '\$${transportationPrices[index]}',
-                  style: TextStyle(color: Colors.white),
-                ),
-                dense: true,
-                onLongPress: () {
-                  setState(() {
-                    transportationItems.removeAt(index);
-                  });
-                },
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
@@ -455,31 +502,40 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
           title: Text('Entertainment'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView.builder(
-          itemCount: entertainmentItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              elevation: 3.0,
-              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
-              color: Colors.blueGrey[700],
-              child: ListTile(
-                title: Text(
-                  '${entertainmentItems[index]}',
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/background.png'),
+                fit: BoxFit.cover),
+          ),
+          child: ListView.builder(
+            itemCount: entertainmentItems.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                elevation: 3.0,
+                margin:
+                    new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+                color: Colors.blueGrey[700],
+                child: ListTile(
+                  title: Text(
+                    '${entertainmentItems[index]}',
+                    style: TextStyle(fontSize: 15.0, color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    '\$${entertainmentPrices[index]}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  dense: true,
+                  onLongPress: () {
+                    setState(() {
+                      entertainmentItems.removeAt(index);
+                      entertainmentPrices.removeAt(index);
+                    });
+                  },
                 ),
-                subtitle: Text(
-                  '\$${entertainmentPrices[index]}',
-                  style: TextStyle(color: Colors.white),
-                ),
-                dense: true,
-                onLongPress: () {
-                  setState(() {
-                    entertainmentItems.removeAt(index);
-                  });
-                },
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
@@ -512,31 +568,40 @@ class _OtherPageState extends State<OtherPage> {
           title: Text('Other'),
           backgroundColor: Colors.blueGrey[900],
         ),
-        body: ListView.builder(
-          itemCount: otherItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              elevation: 3.0,
-              margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
-              color: Colors.blueGrey[700],
-              child: ListTile(
-                title: Text(
-                  '${otherItems[index]}',
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/background.png'),
+                fit: BoxFit.cover),
+          ),
+          child: ListView.builder(
+            itemCount: otherItems.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                elevation: 3.0,
+                margin:
+                    new EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+                color: Colors.blueGrey[700],
+                child: ListTile(
+                  title: Text(
+                    '${otherItems[index]}',
+                    style: TextStyle(fontSize: 15.0, color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    '\$${otherPrices[index]}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  dense: true,
+                  onLongPress: () {
+                    setState(() {
+                      otherItems.removeAt(index);
+                      otherPrices.removeAt(index);
+                    });
+                  },
                 ),
-                subtitle: Text(
-                  '\$${otherPrices[index]}',
-                  style: TextStyle(color: Colors.white),
-                ),
-                dense: true,
-                onLongPress: () {
-                  setState(() {
-                    otherItems.removeAt(index);
-                  });
-                },
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 5.0,
