@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
@@ -233,25 +234,21 @@ class EducationPage extends StatefulWidget {
   _EducationPageState createState() => _EducationPageState();
 }
 
-class _EducationPageState extends State<EducationPage>
-    with AutomaticKeepAliveClientMixin {
-  List<String> educationItems = ['Tuition', 'Textbooks', 'Lab Equipment'];
-  List<String> educationPrices = ['2000', '300', '50'];
+class _EducationPageState extends State<EducationPage> {
+  List<String> educationItems = ['Textbooks', 'Parking Pass', 'Binders'];
+  List<String> educationPrices = ['300', '200', '10'];
 
   TextEditingController itemController = new TextEditingController();
   TextEditingController priceController = new TextEditingController();
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   void initState() {
     super.initState();
+    _update();
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
         backgroundColor: Colors.blueGrey[900],
         appBar: AppBar(
@@ -285,8 +282,7 @@ class _EducationPageState extends State<EducationPage>
                   dense: true,
                   onLongPress: () {
                     setState(() {
-                      educationItems.removeAt(index);
-                      educationPrices.removeAt(index);
+                      _remove(index);
                     });
                   },
                 ),
@@ -332,8 +328,8 @@ class _EducationPageState extends State<EducationPage>
                 child: const Text('Enter'),
                 onPressed: () {
                   setState(() {
-                    educationItems.add(itemController.text);
-                    educationPrices.add(priceController.text);
+                    _addItem(itemController.text);
+                    _addPrice(priceController.text);
                     Navigator.pop(context);
                     itemController.clear();
                     priceController.clear();
@@ -341,6 +337,40 @@ class _EducationPageState extends State<EducationPage>
                 }),
           ],
         ));
+  }
+
+  _addItem(String item) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      educationItems.add(item);
+      prefs.setStringList('educationItems', educationItems);
+    });
+  }
+
+  _addPrice(String price) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      educationPrices.add(price);
+      prefs.setStringList('educationPrices', educationPrices);
+    });
+  }
+
+  _remove(int index) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      educationItems.removeAt(index);
+      educationPrices.removeAt(index);
+      prefs.setStringList('educationItems', educationItems);
+      prefs.setStringList('educationPrices', educationPrices);
+    });
+  }
+
+  _update() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      educationItems = prefs.getStringList('educationItems') ?? 0;
+      educationPrices = prefs.getStringList('educationPrices') ?? 0;
+    });
   }
 }
 
@@ -352,6 +382,15 @@ class FoodPage extends StatefulWidget {
 class _FoodPageState extends State<FoodPage> {
   List<String> foodItems = ['Groceries', 'Ramen Bar', 'Boba', 'Ice Cream'];
   List<String> foodPrices = ['140', '25', '3', '2'];
+
+  TextEditingController itemController = new TextEditingController();
+  TextEditingController priceController = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _update();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -388,8 +427,7 @@ class _FoodPageState extends State<FoodPage> {
                   dense: true,
                   onLongPress: () {
                     setState(() {
-                      foodItems.removeAt(index);
-                      foodPrices.removeAt(index);
+                      _remove(index);
                     });
                   },
                 ),
@@ -402,10 +440,82 @@ class _FoodPageState extends State<FoodPage> {
           backgroundColor: Colors.blueGrey[700],
           icon: Icon(Icons.control_point),
           label: Text('Add'),
-          onPressed: () {
-            print('Test');
-          },
+          onPressed: _showDialog,
         ));
+  }
+
+  _showDialog() async {
+    await showDialog<String>(
+        context: context,
+        child: new AlertDialog(
+          contentPadding: const EdgeInsets.all(16.0),
+          content: new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                controller: itemController,
+                autofocus: true,
+                decoration: new InputDecoration(labelText: 'Item'),
+              ),
+              TextField(
+                controller: priceController,
+                decoration: new InputDecoration(labelText: 'Price (\$)'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            new FlatButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            new FlatButton(
+                child: const Text('Enter'),
+                onPressed: () {
+                  setState(() {
+                    _addItem(itemController.text);
+                    _addPrice(priceController.text);
+                    Navigator.pop(context);
+                    itemController.clear();
+                    priceController.clear();
+                  });
+                }),
+          ],
+        ));
+  }
+
+  _addItem(String item) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      foodItems.add(item);
+      prefs.setStringList('foodItems', foodItems);
+    });
+  }
+
+  _addPrice(String price) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      foodPrices.add(price);
+      prefs.setStringList('foodPrices', foodPrices);
+    });
+  }
+
+  _remove(int index) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      foodItems.removeAt(index);
+      foodPrices.removeAt(index);
+      prefs.setStringList('foodItems', foodItems);
+      prefs.setStringList('foodPrices', foodPrices);
+    });
+  }
+
+  _update() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      foodItems = prefs.getStringList('foodItems') ?? 0;
+      foodPrices = prefs.getStringList('foodPrices') ?? 0;
+    });
   }
 }
 
@@ -415,12 +525,17 @@ class TransportationPage extends StatefulWidget {
 }
 
 class _TransportationPageState extends State<TransportationPage> {
-  List<String> transportationItems = [
-    'Gas',
-    'Uber',
-  ];
-
+  List<String> transportationItems = ['Gas', 'Uber'];
   List<String> transportationPrices = ['40', '15'];
+
+  TextEditingController itemController = new TextEditingController();
+  TextEditingController priceController = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _update();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -457,8 +572,7 @@ class _TransportationPageState extends State<TransportationPage> {
                   dense: true,
                   onLongPress: () {
                     setState(() {
-                      transportationItems.removeAt(index);
-                      transportationPrices.removeAt(index);
+                      _remove(index);
                     });
                   },
                 ),
@@ -471,10 +585,82 @@ class _TransportationPageState extends State<TransportationPage> {
           backgroundColor: Colors.blueGrey[700],
           icon: Icon(Icons.control_point),
           label: Text('Add'),
-          onPressed: () {
-            print('Test');
-          },
+          onPressed: _showDialog,
         ));
+  }
+
+  _showDialog() async {
+    await showDialog<String>(
+        context: context,
+        child: new AlertDialog(
+          contentPadding: const EdgeInsets.all(16.0),
+          content: new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                controller: itemController,
+                autofocus: true,
+                decoration: new InputDecoration(labelText: 'Item'),
+              ),
+              TextField(
+                controller: priceController,
+                decoration: new InputDecoration(labelText: 'Price (\$)'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            new FlatButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            new FlatButton(
+                child: const Text('Enter'),
+                onPressed: () {
+                  setState(() {
+                    _addItem(itemController.text);
+                    _addPrice(priceController.text);
+                    Navigator.pop(context);
+                    itemController.clear();
+                    priceController.clear();
+                  });
+                }),
+          ],
+        ));
+  }
+
+  _addItem(String item) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      transportationItems.add(item);
+      prefs.setStringList('transportationItems', transportationItems);
+    });
+  }
+
+  _addPrice(String price) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      transportationPrices.add(price);
+      prefs.setStringList('transportationPrices', transportationPrices);
+    });
+  }
+
+  _remove(int index) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      transportationItems.removeAt(index);
+      transportationPrices.removeAt(index);
+      prefs.setStringList('transportationItems', transportationItems);
+      prefs.setStringList('transportationPrices', transportationPrices);
+    });
+  }
+
+  _update() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      transportationItems = prefs.getStringList('transportationItems') ?? 0;
+      transportationPrices = prefs.getStringList('transportationPrices') ?? 0;
+    });
   }
 }
 
@@ -484,14 +670,17 @@ class EntertainmentPage extends StatefulWidget {
 }
 
 class _EntertainmentPageState extends State<EntertainmentPage> {
-  List<String> entertainmentItems = [
-    'Netflix',
-    'Spotify',
-    'Movie Theater',
-    'Mini Golf'
-  ];
-
+  List<String> entertainmentItems = ['Netflix', 'Spotify', 'Movie Theater', 'Mini Golf'];
   List<String> entertainmentPrices = ['12', '10', '20', '5'];
+
+  TextEditingController itemController = new TextEditingController();
+  TextEditingController priceController = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _update();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -528,8 +717,7 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
                   dense: true,
                   onLongPress: () {
                     setState(() {
-                      entertainmentItems.removeAt(index);
-                      entertainmentPrices.removeAt(index);
+                      _remove(index);
                     });
                   },
                 ),
@@ -542,10 +730,82 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
           backgroundColor: Colors.blueGrey[700],
           icon: Icon(Icons.control_point),
           label: Text('Add'),
-          onPressed: () {
-            print('Test');
-          },
+          onPressed: _showDialog,
         ));
+  }
+
+  _showDialog() async {
+    await showDialog<String>(
+        context: context,
+        child: new AlertDialog(
+          contentPadding: const EdgeInsets.all(16.0),
+          content: new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                controller: itemController,
+                autofocus: true,
+                decoration: new InputDecoration(labelText: 'Item'),
+              ),
+              TextField(
+                controller: priceController,
+                decoration: new InputDecoration(labelText: 'Price (\$)'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            new FlatButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            new FlatButton(
+                child: const Text('Enter'),
+                onPressed: () {
+                  setState(() {
+                    _addItem(itemController.text);
+                    _addPrice(priceController.text);
+                    Navigator.pop(context);
+                    itemController.clear();
+                    priceController.clear();
+                  });
+                }),
+          ],
+        ));
+  }
+
+  _addItem(String item) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      entertainmentItems.add(item);
+      prefs.setStringList('entertainmentItems', entertainmentItems);
+    });
+  }
+
+  _addPrice(String price) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      entertainmentPrices.add(price);
+      prefs.setStringList('entertainmentPrices', entertainmentPrices);
+    });
+  }
+
+  _remove(int index) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      entertainmentItems.removeAt(index);
+      entertainmentPrices.removeAt(index);
+      prefs.setStringList('entertainmentItems', entertainmentItems);
+      prefs.setStringList('entertainmentPrices', entertainmentPrices);
+    });
+  }
+
+  _update() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      entertainmentItems = prefs.getStringList('entertainmentItems') ?? 0;
+      entertainmentPrices = prefs.getStringList('entertainmentPrices') ?? 0;
+    });
   }
 }
 
@@ -556,8 +816,16 @@ class OtherPage extends StatefulWidget {
 
 class _OtherPageState extends State<OtherPage> {
   List<String> otherItems = ['Clothes'];
-
   List<String> otherPrices = ['30'];
+
+  TextEditingController itemController = new TextEditingController();
+  TextEditingController priceController = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _update();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -594,8 +862,7 @@ class _OtherPageState extends State<OtherPage> {
                   dense: true,
                   onLongPress: () {
                     setState(() {
-                      otherItems.removeAt(index);
-                      otherPrices.removeAt(index);
+                      _remove(index);
                     });
                   },
                 ),
@@ -608,9 +875,81 @@ class _OtherPageState extends State<OtherPage> {
           backgroundColor: Colors.blueGrey[700],
           icon: Icon(Icons.control_point),
           label: Text('Add'),
-          onPressed: () {
-            print('Test');
-          },
+          onPressed: _showDialog,
         ));
+  }
+
+  _showDialog() async {
+    await showDialog<String>(
+        context: context,
+        child: new AlertDialog(
+          contentPadding: const EdgeInsets.all(16.0),
+          content: new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                controller: itemController,
+                autofocus: true,
+                decoration: new InputDecoration(labelText: 'Item'),
+              ),
+              TextField(
+                controller: priceController,
+                decoration: new InputDecoration(labelText: 'Price (\$)'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            new FlatButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            new FlatButton(
+                child: const Text('Enter'),
+                onPressed: () {
+                  setState(() {
+                    _addItem(itemController.text);
+                    _addPrice(priceController.text);
+                    Navigator.pop(context);
+                    itemController.clear();
+                    priceController.clear();
+                  });
+                }),
+          ],
+        ));
+  }
+
+  _addItem(String item) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      otherItems.add(item);
+      prefs.setStringList('otherItems', otherItems);
+    });
+  }
+
+  _addPrice(String price) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      otherPrices.add(price);
+      prefs.setStringList('otherPrices', otherPrices);
+    });
+  }
+
+  _remove(int index) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      otherItems.removeAt(index);
+      otherPrices.removeAt(index);
+      prefs.setStringList('otherItems', otherItems);
+      prefs.setStringList('otherPrices', otherPrices);
+    });
+  }
+
+  _update() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      otherItems = prefs.getStringList('otherItems') ?? 0;
+      otherPrices = prefs.getStringList('otherPrices') ?? 0;
+    });
   }
 }
