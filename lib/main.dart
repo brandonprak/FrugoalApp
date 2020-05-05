@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 void main() => runApp(MyApp());
 
@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Frugoal',
       theme: ThemeData(
         // This is the theme of your application.
@@ -27,6 +28,61 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class DonutPieChart extends StatelessWidget {
+  final List<charts.Series> seriesList;
+  final bool animate;
+
+  DonutPieChart(this.seriesList, {this.animate});
+
+  factory DonutPieChart.withSampleData() {
+    return new DonutPieChart(
+      _createData(),
+      animate: true,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new charts.PieChart(seriesList,
+        animate: animate,
+        // Configure the width of the pie slices to 60px. The remaining space in
+        // the chart will be left as a hole in the center.
+        defaultRenderer: new charts.ArcRendererConfig(arcWidth: 75));
+  }
+
+  static List<charts.Series<Slice, String>> _createData() {
+    final data = [
+      new Slice(
+          'Education', 515, charts.ColorUtil.fromDartColor(Colors.red[700])),
+      new Slice('Food', 170, charts.ColorUtil.fromDartColor(Colors.green[700])),
+      new Slice('Transportation', 55,
+          charts.ColorUtil.fromDartColor(Colors.blue[700])),
+      new Slice('Entertainment', 47,
+          charts.ColorUtil.fromDartColor(Colors.yellow[700])),
+      new Slice(
+          'Other', 30, charts.ColorUtil.fromDartColor(Colors.purple[700])),
+    ];
+
+    return [
+      new charts.Series<Slice, String>(
+        id: 'Expenses',
+        domainFn: (Slice expenses, _) => expenses.category,
+        measureFn: (Slice expenses, _) => expenses.value,
+        colorFn: (Slice expenses, _) => expenses.color,
+        data: data,
+      )
+    ];
+  }
+}
+
+class Slice {
+  final String category;
+  final int value;
+  final charts.Color color;
+
+  Slice(this.category, this.value, this.color);
+}
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
@@ -36,38 +92,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<AnimatedCircularChartState> _chartKey =
-      new GlobalKey<AnimatedCircularChartState>();
-
-  List<CircularStackEntry> data = <CircularStackEntry>[
-    new CircularStackEntry(
-      <CircularSegmentEntry>[
-        new CircularSegmentEntry(3300, Colors.red, rankKey: 'Q1'),
-        new CircularSegmentEntry(195, Colors.green, rankKey: 'Q2'),
-        new CircularSegmentEntry(60, Colors.blue, rankKey: 'Q3'),
-        new CircularSegmentEntry(45, Colors.yellow, rankKey: 'Q4'),
-        new CircularSegmentEntry(30, Colors.purple, rankKey: 'Q5'),
-      ],
-      rankKey: 'Quarterly Profits',
-    ),
-  ];
-
-  void _cycleSamples() {
-    List<CircularStackEntry> nextData = <CircularStackEntry>[
-      new CircularStackEntry(
-        <CircularSegmentEntry>[
-          new CircularSegmentEntry(3300, Colors.red, rankKey: 'Q1'),
-          new CircularSegmentEntry(195, Colors.green, rankKey: 'Q2'),
-          new CircularSegmentEntry(60, Colors.blue, rankKey: 'Q3'),
-          new CircularSegmentEntry(45, Colors.yellow, rankKey: 'Q4'),
-          new CircularSegmentEntry(30, Colors.purple, rankKey: 'Q5'),
-        ],
-        rankKey: 'Quarterly Profits',
-      ),
-    ];
-    setState(() {
-      _chartKey.currentState.updateData(nextData);
-    });
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -78,19 +105,15 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    var dpc = DonutPieChart.withSampleData();
     return Scaffold(
       backgroundColor: Colors.blueGrey[900],
       appBar: AppBar(
-          elevation: 0.0,
-          title: Text('Home'),
-          backgroundColor: Colors.blueGrey[900],
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.settings),
-              color: Colors.white,
-              onPressed: () {},
-            ),
-          ]),
+        elevation: 0.0,
+        centerTitle: true,
+        title: Text('Home'),
+        backgroundColor: Colors.blueGrey[900],
+      ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -112,11 +135,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: TextStyle(fontSize: 14, color: Colors.white)),
               ),
             ),
-            AnimatedCircularChart(
-              key: _chartKey,
-              size: const Size(350, 350),
-              initialChartData: data,
-              chartType: CircularChartType.Pie,
+            Container(
+              height: 350,
+              width: 350,
+              child: dpc,
             ),
           ],
         ),
@@ -153,11 +175,11 @@ class CategoryPage extends StatelessWidget {
     Icons.more_horiz
   ];
   final categoryColor = [
-    Colors.red,
-    Colors.green,
-    Colors.blue,
-    Colors.yellow,
-    Colors.purple
+    Colors.red[700],
+    Colors.green[700],
+    Colors.blue[700],
+    Colors.yellow[700],
+    Colors.purple[700]
   ];
 
   @override
@@ -166,6 +188,7 @@ class CategoryPage extends StatelessWidget {
       backgroundColor: Colors.blueGrey[900],
       appBar: AppBar(
         elevation: 0.0,
+        centerTitle: true,
         title: Text('Categories'),
         backgroundColor: Colors.blueGrey[900],
       ),
@@ -253,6 +276,7 @@ class _EducationPageState extends State<EducationPage> {
         backgroundColor: Colors.blueGrey[900],
         appBar: AppBar(
           elevation: 0.0,
+          centerTitle: true,
           title: Text('Education'),
           backgroundColor: Colors.blueGrey[900],
         ),
@@ -398,6 +422,7 @@ class _FoodPageState extends State<FoodPage> {
         backgroundColor: Colors.blueGrey[900],
         appBar: AppBar(
           elevation: 0.0,
+          centerTitle: true,
           title: Text('Food'),
           backgroundColor: Colors.blueGrey[900],
         ),
@@ -543,6 +568,7 @@ class _TransportationPageState extends State<TransportationPage> {
         backgroundColor: Colors.blueGrey[900],
         appBar: AppBar(
           elevation: 0.0,
+          centerTitle: true,
           title: Text('Transportation'),
           backgroundColor: Colors.blueGrey[900],
         ),
@@ -670,7 +696,12 @@ class EntertainmentPage extends StatefulWidget {
 }
 
 class _EntertainmentPageState extends State<EntertainmentPage> {
-  List<String> entertainmentItems = ['Netflix', 'Spotify', 'Movie Theater', 'Mini Golf'];
+  List<String> entertainmentItems = [
+    'Netflix',
+    'Spotify',
+    'Movie Theater',
+    'Mini Golf'
+  ];
   List<String> entertainmentPrices = ['12', '10', '20', '5'];
 
   TextEditingController itemController = new TextEditingController();
@@ -688,6 +719,7 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
         backgroundColor: Colors.blueGrey[900],
         appBar: AppBar(
           elevation: 0.0,
+          centerTitle: true,
           title: Text('Entertainment'),
           backgroundColor: Colors.blueGrey[900],
         ),
@@ -833,6 +865,7 @@ class _OtherPageState extends State<OtherPage> {
         backgroundColor: Colors.blueGrey[900],
         appBar: AppBar(
           elevation: 0.0,
+          centerTitle: true,
           title: Text('Other'),
           backgroundColor: Colors.blueGrey[900],
         ),
